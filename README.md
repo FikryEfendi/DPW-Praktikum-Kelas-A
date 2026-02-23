@@ -15,7 +15,7 @@ https://pin.it/3OpIg4kTC
 2. Nama Mempelai ✅
 3. Nama Tamu ✅
 4. Tanggal Pernikahan ✅
-5. Ucapan Maaf Atas Kesalahan Penulisan
+5. Ucapan Maaf Atas Kesalahan Penulisan ✅.....
 
 ## HALAMAN ISI
 1. Salam Undangan
