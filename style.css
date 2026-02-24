@@ -28,7 +28,6 @@ div:hover {
         0 12px 25px rgba(0, 0, 0, 0.08);
 }
 
-
 hr {
     width: 50%;
     margin: 30px auto;
@@ -70,4 +69,71 @@ iframe {
     margin-top: 20px;
     border-radius: 10px;
     box-shadow: 0 6px 15px rgba(0, 0, 0, 0.08);
+}
+
+.keluarga-box ol {
+    padding-left: 20px;
+    margin: 0;
+}
+
+.keluarga-box li {
+    margin-bottom: 8px;
+}
+
+.keluarga-container {
+    display: flex;
+    gap: 50px;
+    margin-top: 40px;
+}
+
+.keluarga-box {
+    flex: 1;
+}
+
+.keluarga-box ol {
+    padding-left: 20px;
+    margin: 0;
+}
+
+h2 {
+    margin-top: 30px;
+}
+
+ol {
+    padding-left: 20px;
+}
+
+form {
+    margin-top: 30px;
+}
+
+input {
+    width: 100%;
+    padding: 10px;
+    box-sizing: border-box;
+}
+
+button {
+    padding: 10px 20px;
+    background-color: #948979;
+    color: white;
+    border: none;
+    border-radius: 8px;
+    cursor: pointer;
+}
+
+button:hover {
+    background-color: #444;
+}
+
+a {
+    color: #8b6f47;
+    text-decoration: none;
+    font-weight: bold;
+    transition: 0.3s ease;
+}
+
+a:hover {
+    color: #b76e79;
+    text-decoration: underline;
 }

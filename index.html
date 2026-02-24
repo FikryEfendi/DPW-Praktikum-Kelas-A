@@ -13,7 +13,12 @@
             <h2>Undangan Pernikahan</h2>
             <h1>Fikry <br>& <br>Bulan</h1>
             <p>Sabtu, 14 Februari 2026</p>
-            <h3>Yth.<br> Tamu Undangan dan Keluarga</h3>
+            <form onsubmit="tampilkanNama(event)">
+                <label>Masukkan Nama Anda:</label><br><br>
+                <input type="text" id="inputNama" placeholder="Nama Tamu"><br><br>
+                <button type="submit">Buka Undangan</button>
+            </form>
+            <h3 id="namaTamu">Yth.<br> Tamu Undangan dan Keluarga</h3>
             <p>Mohon maaf atas kesalahan dalam penulisan nama</p>
             <img src=https://i.pinimg.com/originals/5e/30/d1/5e30d1bc71616beb163c153c88bdaceb.jpg alt="Gambar Undangan"
                 width="300">
@@ -48,7 +53,28 @@
                 Akad Nikah : 08.00 WIB <br>
                 Resepsi : 11.00 WIB - Selesai
             </p>
+            <h2>Keluarga Mempelai Pria</h2>
+            <div class="keluarga-container">
+                
+                <div class="keluarga-box">
+                    <h2>Keluarga Mempelai Pria</h2>
+                    <ol>
+                        <li>Ayah Mempelai Pria</li>
+                        <li>Ibu Mempelai Pria</li>
+                        <li>Saudara/i Mempelai Pria</li>
+                    </ol>
+                </div>
 
+                <div class="keluarga-box">
+                    <h2>Keluarga Mempelai Wanita</h2>
+                    <ol>
+                        <li>Ayah Mempelai Wanita</li>
+                        <li>Ibu Mempelai Wanita</li>
+                        <li>Saudara/i Mempelai Wanita</li>
+                    </ol>
+                </div>
+
+            </div>
             <h3>Lokasi:</h3>
             <p>
                 Gedung Serbaguna Bahagia <br>
@@ -62,6 +88,11 @@
                 allowfullscreen="" 
                 loading="lazy">
             </iframe>
+            <p>
+                <a href="https://www.google.com/maps?q=Pekanbaru" target="_blank">
+                    Lihat Lokasi di Google Maps
+                </a>
+            </p>
         </center>
     </div>
 
@@ -98,6 +129,16 @@
             <h3>Wassalamu’alaikum Warahmatullahi Wabarakatuh</h3>
         </center>
     </div>
+    <script>
+    function tampilkanNama(event) {
+        event.preventDefault();
+        var nama = document.getElementById("inputNama").value;
+        if(nama !== "") {
+            document.getElementById("namaTamu").innerHTML =
+            "Yth.<br>" + nama;
+        }
+    }
+    </script>
 </body>
 
 </html>
