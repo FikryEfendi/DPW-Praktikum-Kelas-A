@@ -21,3 +21,12 @@ const countdown = setInterval(function () {
     }
 
 }, 1000);
+
+function tampilkanNama(event) {
+    event.preventDefault();
+    var nama = document.getElementById("inputNama").value;
+    if (nama !== "") {
+        document.getElementById("namaTamu").innerHTML =
+            "Yth.<br>" + nama + " dan Keluarga";
+    }
+}
