@@ -7,6 +7,16 @@
 </head>
 
 <body>
+    <script>
+    function tampilkanNama(event) {
+        event.preventDefault();
+        var nama = document.getElementById("inputNama").value;
+        if(nama !== "") {
+            document.getElementById("namaTamu").innerHTML =
+            "Yth.<br>" + nama;
+        }
+    }
+    </script>
     <!-- Halaman Depan -->
     <div>
         <center>
@@ -14,7 +24,7 @@
             <h1>Fikry <br>& <br>Bulan</h1>
             <p>Sabtu, 14 Februari 2026</p>
             <form onsubmit="tampilkanNama(event)">
-                <label>Masukkan Nama Anda:</label><br><br>
+                <label>Silahkan Masukkan Nama Anda:</label><br><br>
                 <input type="text" id="inputNama" placeholder="Nama Tamu"><br><br>
                 <button type="submit">Buka Undangan</button>
             </form>
@@ -129,16 +139,6 @@
             <h3>Wassalamu’alaikum Warahmatullahi Wabarakatuh</h3>
         </center>
     </div>
-    <script>
-    function tampilkanNama(event) {
-        event.preventDefault();
-        var nama = document.getElementById("inputNama").value;
-        if(nama !== "") {
-            document.getElementById("namaTamu").innerHTML =
-            "Yth.<br>" + nama;
-        }
-    }
-    </script>
 </body>
 
 </html>
