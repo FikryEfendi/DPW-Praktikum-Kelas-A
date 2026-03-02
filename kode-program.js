@@ -30,3 +30,23 @@ function tampilkanNama(event) {
             "Yth.<br>" + nama + " dan Keluarga";
     }
 }
+
+function kirimRsvp(status) {
+
+    const nama = document.getElementById("inputNama").value.trim();
+
+    if (nama === "") {
+        alert("Silakan masukkan nama terlebih dahulu di bagian atas.");
+        return;
+    }
+
+    let pesan = "";
+
+    if (status === "Hadir") {
+        pesan = "Terima kasih " + nama + " 🤍 Kami tunggu kehadiran Anda di hari bahagia kami.";
+    } else {
+        pesan = "Terima kasih " + nama + " atas doa dan perhatiannya 🤍";
+    }
+
+    document.getElementById("pesanKonfirmasi").innerHTML = pesan;
+}
