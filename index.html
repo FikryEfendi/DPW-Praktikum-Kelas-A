@@ -9,21 +9,41 @@
 <body>
     <script src="kode-program.js"></script>
     <script>
-    function tampilkanNama(event) {
-        event.preventDefault();
-        var nama = document.getElementById("inputNama").value;
-        if(nama !== "") {
-            document.getElementById("namaTamu").innerHTML =
-            "Yth.<br>" + nama;
+        function tampilkanNama(event) {
+            event.preventDefault();
+            var nama = document.getElementById("inputNama").value;
+            if (nama !== "") {
+                document.getElementById("namaTamu").innerHTML =
+                    "Yth.<br>" + nama;
+            }
         }
-    }
     </script>
     <!-- Halaman Depan -->
     <div>
         <center>
             <h2>Undangan Pernikahan</h2>
             <h1>Fikry <br>& <br>Bulan</h1>
-            <p>Sabtu, 14 Februari 2026</p>
+            <img src=https://i.pinimg.com/736x/5f/e7/e8/5fe7e89c6988d2b7c93efb26fcaff30a.jpg alt="Gambar Undangan"
+                width="300">
+            <p>Sabtu, 14 Februari 2027</p>
+            <div id="countdown">
+                <div class="time-box">
+                    <span id="days">00</span>
+                    <small>Hari</small>
+                </div>
+                <div class="time-box">
+                    <span id="hours">00</span>
+                    <small>Jam</small>
+                </div>
+                <div class="time-box">
+                    <span id="minutes">00</span>
+                    <small>Menit</small>
+                </div>
+                <div class="time-box">
+                    <span id="seconds">00</span>
+                    <small>Detik</small>
+                </div>
+            </div>
             <form onsubmit="tampilkanNama(event)">
                 <label>Silahkan Masukkan Nama Anda:</label><br><br>
                 <input type="text" id="inputNama" placeholder="Nama Tamu"><br><br>
@@ -31,8 +51,6 @@
             </form>
             <h3 id="namaTamu">Yth.<br> Tamu Undangan dan Keluarga</h3>
             <p>Mohon maaf atas kesalahan dalam penulisan nama</p>
-            <img src=https://i.pinimg.com/originals/5e/30/d1/5e30d1bc71616beb163c153c88bdaceb.jpg alt="Gambar Undangan"
-                width="300">
         </center>
     </div>
 
@@ -60,13 +78,13 @@
 
             <p>
                 Hari : Sabtu <br>
-                Tanggal : 14 Februari 2026 <br>
+                Tanggal : 14 Februari 2027 <br>
                 Akad Nikah : 08.00 WIB <br>
                 Resepsi : 11.00 WIB - Selesai
             </p>
             <h2>Keluarga Mempelai Pria</h2>
             <div class="keluarga-container">
-                
+
                 <div class="keluarga-box">
                     <h2>Keluarga Mempelai Pria</h2>
                     <ol>
@@ -91,13 +109,8 @@
                 Gedung Serbaguna Bahagia <br>
                 Jl. Hufflepuff No. 123, Hogwards City
             </p>
-            <iframe 
-                src="https://www.google.com/maps?q=Pekanbaru&output=embed"
-                width="100%" 
-                height="250" 
-                style="border:0; border-radius:10px; margin-top:20px;"
-                allowfullscreen="" 
-                loading="lazy">
+            <iframe src="https://www.google.com/maps?q=Pekanbaru&output=embed" width="100%" height="250"
+                style="border:0; border-radius:10px; margin-top:20px;" allowfullscreen="" loading="lazy">
             </iframe>
             <p>
                 <a href="https://www.google.com/maps?q=Pekanbaru" target="_blank">
@@ -124,7 +137,7 @@
             <h2>F & B</h2>
             <h3>Fikry & Bulan</h3>
 
-            <p>Sabtu, 14 Februari 2026</p>
+            <p>Sabtu, 14 Februari 2027</p>
 
             <p>
                 Merupakan suatu kehormatan dan kebahagiaan bagi kami
