@@ -11,10 +11,10 @@ body::before {
     content: "";
     position: fixed;
     inset: 0;
-    background-image: url("https://i.pinimg.com/1200x/ce/6f/ec/ce6fec11a8dcca189a012a87e4a37c3c.jpg");
+    background-image: url("https://i.pinimg.com/1200x/90/14/8e/90148e34ee0172258432b8c07dbc31d1.jpg");
     background-size: cover;
     background-position: center;
-    opacity: 0.07;   
+    opacity: 0.37;   
     z-index: -1;
 }
 
