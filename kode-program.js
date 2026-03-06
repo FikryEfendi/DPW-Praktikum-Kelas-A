@@ -33,20 +33,39 @@ function tampilkanNama(event) {
 
 function kirimRsvp(status) {
 
-    const nama = document.getElementById("inputNama").value.trim();
-
-    if (nama === "") {
-        alert("Silakan masukkan nama terlebih dahulu di bagian atas.");
-        return;
-    }
-
     let pesan = "";
 
     if (status === "Hadir") {
-        pesan = "Terima kasih " + nama + " 🤍 Kami tunggu kehadiran Anda di hari bahagia kami.";
-    } else {
-        pesan = "Terima kasih " + nama + " atas doa dan perhatiannya 🤍";
+        pesan = "Terima kasih 🤍 Kami tunggu kehadiran Anda.";
+    } 
+    else if (status === "Tidak Hadir") {
+        pesan = "Terima kasih atas doa dan perhatiannya 🤍";
+    } 
+    else {
+        pesan = "";
     }
 
     document.getElementById("pesanKonfirmasi").innerHTML = pesan;
+}
+function kirimUcapan() {
+
+    const nama = document.getElementById("namaUcapan").value;
+    const ucapan = document.getElementById("isiUcapan").value;
+
+    if (nama === "" || ucapan === "") {
+        alert("Nama dan ucapan harus diisi");
+        return;
+    }
+
+    const kartu = document.createElement("div");
+    kartu.className = "kartu-ucapan";
+
+    kartu.innerHTML =
+        "<h4>" + nama + "</h4>" +
+        "<p>" + ucapan + "</p>";
+
+    document.getElementById("daftarUcapan").appendChild(kartu);
+
+    document.getElementById("namaUcapan").value = "";
+    document.getElementById("isiUcapan").value = "";
 }

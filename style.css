@@ -231,3 +231,93 @@ select {
     font-weight: bold;
     color: #5a3e2b;
 }
+
+/* ===== Nama Tamu ===== */
+.nama-tamu {
+    margin-top: 30px;
+    color: #5a3e2b;
+}
+
+/* ===== RSVP Dropdown ===== */
+.rsvp-dropdown {
+    margin-top: 40px;
+    text-align: center;
+}
+
+.rsvp-dropdown label {
+    display: block;
+    margin-bottom: 10px;
+    font-weight: bold;
+    color: #8b6f47;
+}
+
+.rsvp-dropdown select {
+    width: 50%;
+    padding: 12px;
+    border-radius: 10px;
+    border: 1px solid #d6cfc7;
+    font-size: 15px;
+    background-color: #fff;
+    color: #444;
+    cursor: pointer;
+    transition: 0.3s ease;
+}
+
+.rsvp-dropdown select:hover {
+    border-color: #b76e79;
+}
+
+.rsvp-dropdown select:focus {
+    outline: none;
+    border-color: #8b6f47;
+    box-shadow: 0 0 5px rgba(139,111,71,0.4);
+}
+
+.ucapan-section {
+    text-align: center;
+}
+
+.ucapan-section input {
+    width: 50%;
+    padding: 12px;
+    border-radius: 10px;
+    border: 1px solid #d6cfc7;
+    font-size: 14px;
+}
+
+.ucapan-section button {
+    padding: 10px 25px;
+    background-color: #8b6f47;
+    color: white;
+    border: none;
+    border-radius: 20px;
+    cursor: pointer;
+    transition: 0.3s;
+}
+
+.ucapan-section button:hover {
+    background-color: #b76e79;
+}
+
+#daftarUcapan {
+    margin-top: 30px;
+}
+
+.kartu-ucapan {
+    background: #ffffff;
+    border: 1px solid #e8e1d9;
+    border-radius: 10px;
+    padding: 15px;
+    width: 60%;
+    margin: 10px auto;
+    box-shadow: 0 4px 10px rgba(0,0,0,0.08);
+}
+
+.kartu-ucapan h4 {
+    margin: 0;
+    color: #8b6f47;
+}
+
+.kartu-ucapan p {
+    margin-top: 5px;
+}
