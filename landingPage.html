@@ -1,0 +1,143 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <title>Undangan Pernikahan</title>
+    <link rel="stylesheet" href="style.css">
+    <link href="src/output.css" rel="stylesheet">
+</head>
+
+<body>
+    <script src="kode-program.js"></script>
+    <!-- Halaman isi -->
+    <div>
+        <center>
+            <h2>Assalamu’alaikum Warahmatullahi Wabarakatuh</h2>
+
+            <p>
+                Dengan memohon rahmat dan ridho Allah SWT,
+                kami bermaksud menyelenggarakan pernikahan putra-putri kami:
+            </p>
+
+            <h2>Muhammad Fikry Efendi</h2>
+            <p>Putra dari Bapak Harry & Ibu Ginny</p>
+
+            <h3>Dengan</h3>
+
+            <h2>Bulan Hijarati A</h2>
+            <p>Putri dari Bapak Ron & Ibu Hermione</p>
+
+            <h3>Yang InsyaAllah akan dilaksanakan pada:</h3>
+
+            <p>
+                Hari : Sabtu <br>
+                Tanggal : 14 Februari 2027 <br>
+                Akad Nikah : 08.00 WIB <br>
+                Resepsi : 11.00 WIB - Selesai
+            </p>
+            <h2>Keluarga Mempelai Pria</h2>
+            <div class="keluarga-container">
+
+                <div class="keluarga-box">
+                    <h2>Keluarga Mempelai Pria</h2>
+                    <ol>
+                        <li>Ayah Mempelai Pria</li>
+                        <li>Ibu Mempelai Pria</li>
+                        <li>Saudara/i Mempelai Pria</li>
+                    </ol>
+                </div>
+
+                <div class="keluarga-box">
+                    <h2>Keluarga Mempelai Wanita</h2>
+                    <ol>
+                        <li>Ayah Mempelai Wanita</li>
+                        <li>Ibu Mempelai Wanita</li>
+                        <li>Saudara/i Mempelai Wanita</li>
+                    </ol>
+                </div>
+
+            </div>
+            <h3>Lokasi:</h3>
+            <p>
+                Universitas Riau <br>
+                Kampus Bina Widya, Jl. Bangau Sakti KM. 12,5, Simpang Baru, Kec. Tampan, Kota Pekanbaru, Riau 28293
+            </p>
+            <iframe
+                src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3288.369402747278!2d101.37807147396548!3d0.4763830637627744!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x31d5aea1f427ab57:0x74d49c35acbd10e1!2sUniversitas%20Riau!5e1!3m2!1sid!2sid!4v1772437642959!5m2!1sid!2sid"
+                width="700" height="250" style="border:0; border-radius:10px; margin-top:20px;" loading="lazy">
+            </iframe>
+            <p>
+                <a href="https://www.google.com/maps/place/Universitas+Riau/@0.4763831,101.3780715,755m/data=!3m2!1e3!4b1!4m6!3m5!1s0x31d5aea1f427ab57:0x74d49c35acbd10e1!8m2!3d0.4763777!4d101.3806464!16s%2Fg%2F1jkvnptms?entry=ttu&g_ep=EgoyMDI2MDIyNS4wIKXMDSoASAFQAw%3D%3D"
+                    target="_blank">
+                    Lihat Lokasi di Google Maps
+                </a>
+            </p>
+        </center>
+    </div>
+
+    <hr>
+
+    <!-- Halaman Penutup -->
+    <div>
+        <center>
+            <p style="font-style: italic; color:#7a5c3e;">
+                “Dan di antara tanda-tanda kebesaran-Nya ialah Dia menciptakan
+                untukmu pasangan hidup dari jenismu sendiri,
+                agar kamu merasa tenteram kepadanya,
+                dan dijadikan-Nya di antara kamu rasa kasih dan sayang.”
+            </p>
+            <img src="https://i.pinimg.com/736x/5c/a7/e1/5ca7e19221c3c916a11a368b978d644c.jpg" alt="Foto Mempelai"
+                width="300">
+
+            <h2>F & B</h2>
+            <h3>Fikry & Bulan</h3>
+
+            <p>Sabtu, 14 Februari 2027</p>
+
+            <p>
+                Merupakan suatu kehormatan dan kebahagiaan bagi kami
+                apabila Bapak/Ibu/Saudara/i berkenan hadir
+                untuk memberikan doa restu kepada kami.
+            </p>
+
+            <p style="font-weight: bold; color:#5a3e2b;">
+                Semoga pernikahan ini menjadi awal perjalanan
+                yang penuh keberkahan, kebahagiaan,
+                dan cinta yang abadi hingga akhir hayat.
+            </p>
+            <h3>Wassalamu’alaikum Warahmatullahi Wabarakatuh</h3>
+            <h3>Konfirmasi Kehadiran</h3>
+
+            <div class="rsvp-dropdown">
+                <label for="konfirmasi">Konfirmasi Kehadiran</label>
+                <select id="konfirmasi" onchange="kirimRsvp(this.value)">
+                    <option value="">-- Pilih Kehadiran --</option>
+                    <option value="Hadir">Hadir</option>
+                    <option value="Tidak Hadir">Tidak Hadir</option>
+                </select>
+            </div>
+
+            <p id="pesanKonfirmasi"></p>
+        </center>
+    </div>
+    <hr>
+
+    <div class="ucapan-section">
+        <center>
+            <h2>Tinggalkan Ucapan</h2>
+            <p>Silakan tuliskan doa dan ucapan terbaik untuk kami</p>
+
+            <input type="text" id="namaUcapan" placeholder="Masukkan Nama">
+            <br><br>
+
+            <input type="text" id="isiUcapan" placeholder="Tulis Ucapan">
+            <br><br>
+
+            <button onclick="kirimUcapan()">Kirim</button>
+
+            <div id="daftarUcapan"></div>
+        </center>
+    </div>
+</body>
+
+</html>
