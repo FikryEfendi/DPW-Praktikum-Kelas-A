@@ -1,9 +1,19 @@
+<?php
+session_start();
+if(!isset($_SESSION['login'])){
+    header("Location: login.php");
+    exit;
+}
+
+$nama = isset($_GET['to']) ? $_GET['to'] : "Tamu Undangan";
+?>
+
 <!DOCTYPE html>
 <html lang="id">
 <head>
-    <meta charset="UTF-8">
-    <title>Undangan Pernikahan</title>
-    <link rel="stylesheet" href="style.css">
+<meta charset="UTF-8">
+<title>Undangan Pernikahan</title>
+<link rel="stylesheet" href="style.css">
 </head>
 
 <body>
@@ -17,14 +27,14 @@
 
     <p>Sabtu, 14 Februari 2027</p>
 
-    <h3 id="namaTamu">Yth.<br> Farhan dan Keluarga</h3>
+    <h3>Yth.<br> <?php echo $nama; ?> dan Keluarga</h3>
 
     <button onclick="bukaUndangan()">Open Invitation</button>
 </div>
 
 <script>
 function bukaUndangan() {
-    window.location.href = "landingpage.html";
+    window.location.href = "landingpage.php?to=<?php echo $nama; ?>";
 }
 </script>
 
