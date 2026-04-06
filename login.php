@@ -20,18 +20,21 @@ if(isset($_POST['login'])){
 <html>
 <head>
     <title>Login</title>
+    <link rel="stylesheet" href="login.css">
 </head>
-<body style="text-align:center;">
+<body>
 
-<h2>Login Undangan</h2>
+<div class="login-box">
+    <h2>Login Undangan</h2>
 
-<?php if(isset($error)) echo "<p style='color:red;'>$error</p>"; ?>
+    <?php if(isset($error)) echo "<p class='error'>$error</p>"; ?>
 
-<form method="POST">
-    <input type="text" name="username" placeholder="Username"><br><br>
-    <input type="password" name="password" placeholder="Password"><br><br>
-    <button type="submit" name="login">Login</button>
-</form>
+    <form method="POST">
+        <input type="text" name="username" placeholder="Username"><br>
+        <input type="password" name="password" placeholder="Password"><br>
+        <button type="submit" name="login">Login</button>
+    </form>
+</div>
 
 </body>
 </html>
