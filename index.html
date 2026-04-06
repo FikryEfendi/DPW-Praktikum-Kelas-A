@@ -1,31 +1,89 @@
 <!DOCTYPE html>
 <html lang="id">
 <head>
-    <meta charset="UTF-8">
-    <title>Undangan Pernikahan</title>
-    <link rel="stylesheet" href="style.css">
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Undangan Pernikahan</title>
+
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond&family=Cinzel&family=Lato&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="undangan.css">
 </head>
 
 <body>
 
-<div style="text-align:center;">
-    <h2>Undangan Pernikahan</h2>
+<section id="cover" class="section" style="padding-top:70px;">
+  <div class="card cover-card fade-up">
+    <div class="cover-frame"></div>
 
-    <h1>Fikry <br>& <br>Bulan</h1>
+    <span class="label">Undangan Pernikahan</span>
+    <div class="guest-tag">✦ Kepada Yth. Farhan & Keluarga ✦</div>
 
-    <img src="https://i.pinimg.com/736x/5f/e7/e8/5fe7e89c6988d2b7c93efb26fcaff30a.jpg" width="250">
+    <div class="ornament">— ✦ —</div>
 
-    <p>Sabtu, 14 Februari 2027</p>
+    <div class="display-name">
+      Fikry
+      <span class="ampersand">&amp;</span>
+      Bulan
+    </div>
 
-    <h3 id="namaTamu">Yth.<br> Farhan dan Keluarga</h3>
+    <img src="home1.png" class="cover-img">
 
-    <button onclick="bukaUndangan()">Open Invitation</button>
-</div>
+      <div class="date-badge">Sabtu, 14 Februari 2027</div>
+      <div id="countdown">
+        <div class="time-box">
+          <span id="days">00</span>
+          <small>Hari</small>
+        </div>
+        <div class="time-box">
+          <span id="hours">00</span>
+          <small>Jam</small>
+        </div>
+        <div class="time-box">
+          <span id="minutes">00</span>
+          <small>Menit</small>
+        </div>
+        <div class="time-box">
+          <span id="seconds">00</span>
+          <small>Detik</small>
+        </div>
+      </div>
+    <div class="divider"><span class="divider-icon">✦</span></div>
+
+    <!-- BUTTON OPEN -->
+    <button class="btn-gold" onclick="openInvitation()">Open Invitation</button>
+  </div>
+</section>
 
 <script>
-function bukaUndangan() {
-    window.location.href = "landingpage.html";
+function openInvitation(){
+  window.location.href = "undangan.html";
 }
+</script>
+<script>
+document.addEventListener("DOMContentLoaded", function(){
+
+  function updateCountdown() {
+    const target = new Date('2027-02-14T08:00:00');
+    const now = new Date();
+    const diff = target - now;
+
+    if (diff <= 0) return;
+
+    const d = Math.floor(diff / 86400000);
+    const h = Math.floor((diff % 86400000) / 3600000);
+    const m = Math.floor((diff % 3600000) / 60000);
+    const s = Math.floor((diff % 60000) / 1000);
+
+    document.getElementById("days").textContent = d;
+    document.getElementById("hours").textContent = h;
+    document.getElementById("minutes").textContent = m;
+    document.getElementById("seconds").textContent = s;
+  }
+
+  updateCountdown();
+  setInterval(updateCountdown, 1000);
+
+});
 </script>
 
 </body>
