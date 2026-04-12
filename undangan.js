@@ -114,3 +114,15 @@ function toggleMusic() {
   else { audio.play().catch(() => {}); btn.textContent = '⏸'; }
   musicPlaying = !musicPlaying;
 }
+function bukaUndangan() {
+  const opening = document.getElementById("opening");
+  const audio = document.getElementById("bgMusic");
+
+  opening.style.opacity = "0";
+  setTimeout(() => {
+    opening.style.display = "none";
+  }, 800);
+
+  // auto play musik setelah dibuka
+  audio.play().catch(() => {});
+}

@@ -1,9 +1,42 @@
+<?php
+// ─── DATA UNDANGAN (variabel PHP) ───
+$nama_pria        = "Muhammad Fikry Efendi";
+$nama_wanita      = "Bulan Hijarati A";
+$ortu_pria        = "Bapak Harry &amp; Ibu Ginny";
+$ortu_wanita      = "Bapak Ron &amp; Ibu Hermione";
+
+$tanggal_acara    = "Sabtu, 14 Februari 2027";
+$tanggal_numerik  = "14.02.27";
+$jam_akad         = "08:00 WIB";
+$jam_resepsi      = "11:00 WIB - Selesai";
+$jam_persiapan    = "07:00 WIB";
+$dress_code       = "Pastel — Nude — Earthy Tone";
+
+$nama_venue       = "Universitas Riau";
+$alamat_venue     = "Kampus Bina Widya, Jl. Bangau Sakti KM. 12,5<br>Simpang Baru, Kec. Tampan, Kota Pekanbaru, Riau 28293";
+$maps_embed       = "https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3288.369402747278!2d101.37807147396548!3d0.4763830637627744!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x31d5aea1f427ab57:0x74d49c35acbd10e1!2sUniversitas%20Riau!5e1!3m2!1sid!2sid!4v1772437642959!5m2!1sid!2sid";
+$maps_link        = "https://maps.google.com/?q=Universitas+Riau";
+
+// Nama tamu dari URL parameter (dinamis)
+$nama_tamu = isset($_GET['tamu']) ? htmlspecialchars($_GET['tamu']) : "Tamu Undangan";
+
+// Love story (array of data)
+$love_story = [
+    ["tahun" => "2019", "judul" => "Pertemuan Pertama",  "isi" => "Takdir mempertemukan kami di kampus Universitas Riau. Sebuah senyum sederhana menjadi awal dari segalanya — saat itu kami belum tahu bahwa hidup kami akan berubah selamanya."],
+    ["tahun" => "2020", "judul" => "Semakin Dekat",       "isi" => "Di tengah pandemi yang mengunci dunia, justru kedekatan kami semakin tak terbendung. Percakapan tanpa batas dan tawa yang menghangatkan hari-hari sulit."],
+    ["tahun" => "2022", "judul" => "Menjalin Hubungan",   "isi" => "Dengan bismillah dan doa restu keluarga, kami resmi memulai hubungan. Setiap langkah dipenuhi kasih sayang dan komitmen untuk saling menjaga."],
+    ["tahun" => "2027", "judul" => "Menuju Pelaminan ✦", "isi" => "Setelah perjalanan panjang yang indah, kami akhirnya siap melangkah ke babak baru — membangun keluarga sakinah, mawaddah, warahmah bersama selamanya.", "warna" => "rose"],
+];
+
+// Judul halaman (dinamis berdasarkan nama mempelai)
+$page_title = "Undangan Pernikahan — " . strip_tags($nama_pria) . " &amp; " . strip_tags($nama_wanita);
+?>
 <!DOCTYPE html>
 <html lang="id">
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Undangan Pernikahan — Fikry & Bulan</title>
+<title><?php echo $page_title; ?></title>
 <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,600;1,300;1,400&family=Cinzel:wght@400;600&family=Lato:wght@300;400&display=swap" rel="stylesheet">
 <link rel="stylesheet" href="src/output.css">
 <link rel="stylesheet" href="undangan.css">
@@ -21,7 +54,7 @@
   <a href="#story">Cerita</a>
   <a href="#ucapan">Ucapan</a>
   <a href="#penutup">Penutup</a>
-  <a href="dashboard.html" class="nav-dashboard">⬡ Dashboard</a>
+  <a href="dashboard.php" class="nav-dashboard">⬡ Dashboard</a>
 </nav>
 
 <!-- ── MOBILE NAV ── -->
@@ -50,30 +83,44 @@
   <a href="#story" onclick="closeMobileMenu()">Cerita</a>
   <a href="#ucapan" onclick="closeMobileMenu()">Ucapan</a>
   <a href="#penutup" onclick="closeMobileMenu()">Penutup</a>
-  <a href="dashboard.html" class="mobile-dashboard-link">⬡ Dashboard</a>
+  <a href="dashboard.php" class="mobile-dashboard-link">⬡ Dashboard</a>
 </div>
 
-<!-- ══════════════════════════════════════
-     1. COVER
-══════════════════════════════════════ -->
+<!-- ─── COVER OPENING ─── -->
+<div id="opening" class="opening-screen">
+  <div class="opening-content">
+    <p class="label">Undangan Pernikahan</p>
+    <h1 class="opening-title">
+      <?php
+        // Ambil nama depan saja untuk tampilan opening
+        $nama_depan_pria   = explode(' ', $nama_pria)[0];
+        $nama_depan_wanita = explode(' ', $nama_wanita)[0];
+        echo $nama_depan_pria . ' <span>&amp;</span> ' . $nama_depan_wanita;
+      ?>
+    </h1>
+    <p class="opening-sub">Kepada Yth. <?php echo $nama_tamu; ?></p>
+    <button class="btn-gold" onclick="bukaUndangan()">Buka Undangan</button>
+  </div>
+</div>
+
+<!-- ══ 1. COVER ══ -->
 <section id="cover" class="section" style="padding-top:70px;">
   <div class="card cover-card fade-up">
     <div class="cover-frame"></div>
     <span class="label">Undangan Pernikahan</span>
-    <div class="guest-tag" id="guestTag">✦ Kepada Yth. Tamu Undangan ✦</div>
+    <div class="guest-tag" id="guestTag">✦ Kepada Yth. <?php echo $nama_tamu; ?> ✦</div>
 
     <div class="ornament">— ✦ —</div>
 
     <div class="display-name">
-      Fikry
+      <?php echo $nama_depan_pria; ?>
       <span class="ampersand">&amp;</span>
-      Bulan
+      <?php echo $nama_depan_wanita; ?>
     </div>
 
-    <img src="home1.png"
-         alt="Cover Undangan" class="cover-img float">
+    <img src="home1.png" alt="Cover Undangan" class="cover-img float">
 
-    <div class="date-badge">Sabtu, 14 Februari 2027</div>
+    <div class="date-badge"><?php echo $tanggal_acara; ?></div>
 
     <div class="divider"><span class="divider-icon">✦</span></div>
 
@@ -91,9 +138,7 @@
   </div>
 </section>
 
-<!-- ══════════════════════════════════════
-     2. PENGANTAR
-══════════════════════════════════════ -->
+<!-- ══ 2. PENGANTAR ══ -->
 <section id="pengantar" class="section">
   <div class="card bg-[#fdf8f3] border-1 border-[#c9a96e]/30 shadow-xl">
     <span class="ornament">بِسْمِ اللّٰهِ الرَّحْمٰنِ الرَّحِيْمِ</span>
@@ -114,15 +159,13 @@
 
     <p class="body-text" style="margin-top:16px;">
       Merupakan suatu kehormatan dan kebahagiaan bagi kami apabila Bapak/Ibu/Saudara/i,
-      khususnya <strong style="color:var(--brown);" id="pengantarNama">Tamu Undangan</strong>,
+      khususnya <strong style="color:var(--brown);" id="pengantarNama"><?php echo $nama_tamu; ?></strong>,
       berkenan hadir untuk memberikan doa restu.
     </p>
   </div>
 </section>
 
-<!-- ══════════════════════════════════════
-     3. MEMPELAI
-══════════════════════════════════════ -->
+<!-- ══ 3. MEMPELAI ══ -->
 <section id="mempelai" class="section">
   <div class="card scroll-reveal">
     <span class="label">Informasi Mempelai</span>
@@ -131,19 +174,17 @@
 
     <div class="mempelai-grid">
       <div class="mempelai-person">
-        <img src="mempelai1.png"
-             alt="Fikry" class="mempelai-photo">
-        <p class="big-name">Muhammad Fikry Efendi</p>
-        <p class="sub-text">Putra pertama dari<br><strong>Bapak Harry</strong> &amp; <strong>Ibu Ginny</strong></p>
+        <img src="mempelai1.png" alt="<?php echo $nama_depan_pria; ?>" class="mempelai-photo">
+        <p class="big-name"><?php echo $nama_pria; ?></p>
+        <p class="sub-text">Putra pertama dari<br><strong><?php echo $ortu_pria; ?></strong></p>
       </div>
 
       <div class="mempelai-sep">💍</div>
 
       <div class="mempelai-person">
-        <img src="mempelai2.png"
-             alt="Bulan" class="mempelai-photo">
-        <p class="big-name">Bulan Hijarati A</p>
-        <p class="sub-text">Putri pertama dari<br><strong>Bapak Ron</strong> &amp; <strong>Ibu Hermione</strong></p>
+        <img src="mempelai2.png" alt="<?php echo $nama_depan_wanita; ?>" class="mempelai-photo">
+        <p class="big-name"><?php echo $nama_wanita; ?></p>
+        <p class="sub-text">Putri pertama dari<br><strong><?php echo $ortu_wanita; ?></strong></p>
       </div>
     </div>
 
@@ -155,9 +196,7 @@
   </div>
 </section>
 
-<!-- ══════════════════════════════════════
-     4. WAKTU
-══════════════════════════════════════ -->
+<!-- ══ 4. WAKTU ══ -->
 <section id="waktu" class="section">
   <div class="card scroll-reveal">
     <span class="label">Jadwal Acara</span>
@@ -165,14 +204,14 @@
     <div class="divider"><span class="divider-icon">✦</span></div>
 
     <div style="font-family:'Cormorant Garamond',serif; font-size:clamp(36px,8vw,48px); color:var(--brown); font-weight:300; margin:10px 0;">
-      14.02.27
+      <?php echo $tanggal_numerik; ?>
     </div>
-    <p class="sub-text">Sabtu, 14 Februari 2027</p>
+    <p class="sub-text"><?php echo $tanggal_acara; ?></p>
 
     <div class="timeline" style="margin-top:36px;">
       <div class="timeline-item">
         <div class="timeline-content">
-          <div class="timeline-time">07:00 WIB</div>
+          <div class="timeline-time"><?php echo $jam_persiapan; ?></div>
           <div class="timeline-label">Persiapan</div>
         </div>
         <div class="timeline-dot"></div>
@@ -181,77 +220,51 @@
       <div class="timeline-item">
         <div class="timeline-spacer" style="flex:1;"></div>
         <div class="timeline-dot"></div>
-        <div class="timeline-content">
-          <div class="timeline-time">08:00 WIB</div>
+        <div class="timeline-content" style="text-align:left;">
+          <div class="timeline-time"><?php echo $jam_akad; ?></div>
           <div class="timeline-label">Akad Nikah</div>
         </div>
       </div>
       <div class="timeline-item">
         <div class="timeline-content">
-          <div class="timeline-time">10:00 WIB</div>
-          <div class="timeline-label">Sesi Foto</div>
+          <div class="timeline-time"><?php echo $jam_resepsi; ?></div>
+          <div class="timeline-label">Resepsi</div>
         </div>
-        <div class="timeline-dot"></div>
-        <div class="timeline-spacer" style="flex:1;"></div>
-      </div>
-      <div class="timeline-item">
-        <div class="timeline-spacer" style="flex:1;"></div>
-        <div class="timeline-dot"></div>
-        <div class="timeline-content">
-          <div class="timeline-time">11:00 WIB</div>
-          <div class="timeline-label">Resepsi &amp; Pesta</div>
-        </div>
-      </div>
-      <div class="timeline-item">
-        <div class="timeline-content">
-          <div class="timeline-time">Selesai</div>
-          <div class="timeline-label">Hiburan &amp; Penutupan</div>
-        </div>
-        <div class="timeline-dot" style="background:var(--rose);box-shadow:0 0 0 2px var(--rose);"></div>
+        <div class="timeline-dot" style="background:var(--rose);"></div>
         <div class="timeline-spacer" style="flex:1;"></div>
       </div>
     </div>
 
-    <div style="background:rgba(201,169,110,0.1);border-radius:12px;padding:16px 24px;margin-top:16px;display:inline-block;">
-      <p style="font-size:13px;color:var(--brown-light);margin:0;">
+    <div style="margin-top:28px; padding:18px; background:rgba(201,169,110,0.08); border-radius:12px; border:1px solid rgba(201,169,110,0.2);">
+      <p class="sub-text" style="margin:0;">
         <span style="color:var(--gold);font-size:16px;">✦</span> Dress Code:
-        <strong>Pastel — Nude — Earthy Tone</strong>
+        <strong><?php echo $dress_code; ?></strong>
       </p>
     </div>
   </div>
 </section>
 
-<!-- ══════════════════════════════════════
-     5. LOKASI
-══════════════════════════════════════ -->
+<!-- ══ 5. LOKASI ══ -->
 <section id="lokasi" class="section">
   <div class="card scroll-reveal">
     <span class="label">Lokasi Acara</span>
     <p class="section-title">Tempat Pelaksanaan</p>
     <div class="divider"><span class="divider-icon">📍</span></div>
 
-    <p class="big-name" style="font-size:26px; margin-bottom:4px;">Universitas Riau</p>
-    <p class="sub-text">
-      Kampus Bina Widya, Jl. Bangau Sakti KM. 12,5<br>
-      Simpang Baru, Kec. Tampan, Kota Pekanbaru, Riau 28293
-    </p>
+    <p class="big-name" style="font-size:26px; margin-bottom:4px;"><?php echo $nama_venue; ?></p>
+    <p class="sub-text"><?php echo $alamat_venue; ?></p>
 
     <div class="maps-wrap">
-      <iframe
-        src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3288.369402747278!2d101.37807147396548!3d0.4763830637627744!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x31d5aea1f427ab57:0x74d49c35acbd10e1!2sUniversitas%20Riau!5e1!3m2!1sid!2sid!4v1772437642959!5m2!1sid!2sid"
-        loading="lazy">
-      </iframe>
+      <iframe src="<?php echo $maps_embed; ?>" loading="lazy"></iframe>
     </div>
 
-    <a href="https://maps.google.com/?q=Universitas+Riau" target="_blank" class="maps-btn">
+    <a href="<?php echo $maps_link; ?>" target="_blank" class="maps-btn">
       🗺 Buka di Google Maps
     </a>
   </div>
 </section>
 
-<!-- ══════════════════════════════════════
-     6. GALERI
-══════════════════════════════════════ -->
+<!-- ══ 6. GALERI ══ -->
 <section id="galeri" class="section">
   <div class="card scroll-reveal">
     <span class="label">Galeri Foto</span>
@@ -259,21 +272,16 @@
     <div class="divider"><span class="divider-icon">✦</span></div>
 
     <div class="gallery-grid">
-      <div class="gallery-item featured">
-        <img src="galeri1.png" alt="Foto 1">
-      </div>
-      <div class="gallery-item">
-        <img src="galeri2.png" alt="Foto 2">
-      </div>
-      <div class="gallery-item">
-        <img src="galeri3.png" alt="Foto 3">
-      </div>
-      <div class="gallery-item">
-        <img src="galeri4.png" alt="Foto 4">
-      </div>
-      <div class="gallery-item">
-        <img src="galeri5.png" alt="Foto 5">
-      </div>
+      <?php
+        // Generate gallery items dengan loop PHP
+        $total_foto = 5;
+        for ($i = 1; $i <= $total_foto; $i++) {
+          $featured = ($i === 1) ? ' featured' : '';
+          echo '<div class="gallery-item' . $featured . '">';
+          echo '<img src="galeri' . $i . '.png" alt="Foto ' . $i . '">';
+          echo '</div>';
+        }
+      ?>
     </div>
 
     <p class="sub-text" style="margin-top:16px; font-size:12px;">
@@ -282,9 +290,7 @@
   </div>
 </section>
 
-<!-- ══════════════════════════════════════
-     7. STORY
-══════════════════════════════════════ -->
+<!-- ══ 7. LOVE STORY ══ -->
 <section id="story" class="section">
   <div class="card scroll-reveal">
     <span class="label">Our Love Story</span>
@@ -292,41 +298,29 @@
     <div class="divider"><span class="divider-icon">💌</span></div>
 
     <div style="margin-top:28px; text-align:left;">
-      <div class="story-item">
-        <div class="story-year">2019</div>
-        <div class="story-text">
-          <h4>Pertemuan Pertama</h4>
-          <p>Takdir mempertemukan kami di kampus Universitas Riau. Sebuah senyum sederhana menjadi awal dari segalanya — saat itu kami belum tahu bahwa hidup kami akan berubah selamanya.</p>
-        </div>
-      </div>
-      <div class="story-item">
-        <div class="story-year">2020</div>
-        <div class="story-text">
-          <h4>Semakin Dekat</h4>
-          <p>Di tengah pandemi yang mengunci dunia, justru kedekatan kami semakin tak terbendung. Percakapan tanpa batas dan tawa yang menghangatkan hari-hari sulit.</p>
-        </div>
-      </div>
-      <div class="story-item">
-        <div class="story-year">2022</div>
-        <div class="story-text">
-          <h4>Menjalin Hubungan</h4>
-          <p>Dengan bismillah dan doa restu keluarga, kami resmi memulai hubungan. Setiap langkah dipenuhi kasih sayang dan komitmen untuk saling menjaga.</p>
-        </div>
-      </div>
-      <div class="story-item" style="border-left-color:var(--rose);">
-        <div class="story-year" style="color:var(--rose);">2027</div>
-        <div class="story-text">
-          <h4>Menuju Pelaminan ✦</h4>
-          <p>Setelah perjalanan panjang yang indah, kami akhirnya siap melangkah ke babak baru — membangun keluarga sakinah, mawaddah, warahmah bersama selamanya.</p>
-        </div>
-      </div>
+      <?php
+        // Loop array love story untuk generate HTML dinamis
+        foreach ($love_story as $item) {
+          $warna_style = isset($item['warna']) && $item['warna'] === 'rose'
+            ? 'border-left-color:var(--rose);'
+            : '';
+          $warna_tahun = isset($item['warna']) && $item['warna'] === 'rose'
+            ? 'color:var(--rose);'
+            : '';
+          echo '<div class="story-item" style="' . $warna_style . '">';
+          echo '  <div class="story-year" style="' . $warna_tahun . '">' . $item['tahun'] . '</div>';
+          echo '  <div class="story-text">';
+          echo '    <h4>' . $item['judul'] . '</h4>';
+          echo '    <p>' . $item['isi'] . '</p>';
+          echo '  </div>';
+          echo '</div>';
+        }
+      ?>
     </div>
   </div>
 </section>
 
-<!-- ══════════════════════════════════════
-     8. UCAPAN & RSVP
-══════════════════════════════════════ -->
+<!-- ══ 8. UCAPAN & RSVP ══ -->
 <section id="ucapan" class="section">
   <div class="card scroll-reveal">
     <span class="label">Doa &amp; Ucapan</span>
@@ -337,14 +331,14 @@
 
     <div class="ucapan-form">
       <div style="font-size:12px; letter-spacing:2px; text-transform:uppercase; color:var(--gold-dark); margin-bottom:14px;">Tinggalkan Ucapan</div>
-      <input type="text" id="ucapanNama" placeholder="Nama Anda" />
+      <!-- Nama tamu dari URL otomatis terisi -->
+      <input type="text" id="ucapanNama" placeholder="Nama Anda" value="<?php echo ($nama_tamu !== 'Tamu Undangan') ? $nama_tamu : ''; ?>"/>
       <textarea id="ucapanPesan" placeholder="Tulis doa dan ucapan untuk mempelai..."></textarea>
       <select id="ucapanStatus">
         <option value="">— Konfirmasi Kehadiran —</option>
         <option value="hadir">✓ Hadir</option>
         <option value="tidak">✗ Tidak Hadir</option>
       </select>
-      
       <button class="btn-gold" onclick="kirimUcapan()">Kirim Ucapan ✦</button>
     </div>
 
@@ -352,18 +346,22 @@
   </div>
 </section>
 
-<!-- ══════════════════════════════════════
-     9. PENUTUP
-══════════════════════════════════════ -->
+<!-- ══ 9. PENUTUP ══ -->
 <section id="penutup" class="section">
   <div class="card scroll-reveal" style="text-align:center;">
     <span class="ornament">✦ ✦ ✦</span>
-    <div class="display-name" style="font-size:clamp(44px,10vw,60px); letter-spacing:6px;">F &amp; B</div>
-    <p class="sub-text" style="font-size:18px; margin-top:4px;">Fikry &amp; Bulan</p>
+    <div class="display-name" style="font-size:clamp(44px,10vw,60px); letter-spacing:6px;">
+      <?php
+        // Inisial nama mempelai
+        echo substr($nama_depan_pria, 0, 1) . ' &amp; ' . substr($nama_depan_wanita, 0, 1);
+      ?>
+    </div>
+    <p class="sub-text" style="font-size:18px; margin-top:4px;">
+      <?php echo $nama_depan_pria . ' &amp; ' . $nama_depan_wanita; ?>
+    </p>
     <div class="divider"><span class="divider-icon">♥</span></div>
 
-    <img src="penutup1.png"
-         alt="Foto Mempelai"
+    <img src="penutup1.png" alt="Foto Mempelai"
          style="width:180px;height:180px;object-fit:cover;border-radius:50%;border:4px solid var(--gold);box-shadow:0 0 0 8px rgba(201,169,110,0.15);margin:24px auto;display:block;">
 
     <p class="body-text" style="margin:20px auto;">
@@ -372,7 +370,7 @@
     </p>
 
     <p style="font-size:13px; color:var(--gold); letter-spacing:2px; margin:20px 0;">
-      Sabtu, 14 Februari 2027
+      <?php echo $tanggal_acara; ?>
     </p>
 
     <div style="background:linear-gradient(135deg,rgba(201,169,110,0.1),rgba(185,110,130,0.08));border-radius:14px;padding:20px;margin-top:16px;">
@@ -380,7 +378,7 @@
         Wassalamu'alaikum Warahmatullahi Wabarakatuh
       </p>
       <p style="font-size:13px;color:var(--text-light);margin-top:8px;">
-        Hormat kami, Keluarga Besar Fikry &amp; Bulan
+        Hormat kami, Keluarga Besar <?php echo $nama_depan_pria . ' &amp; ' . $nama_depan_wanita; ?>
       </p>
     </div>
 
@@ -400,6 +398,15 @@
 
 <script src="undangan.js"></script>
 <script>
+// Nama tamu dari PHP diteruskan ke JS (override URL param)
+(function() {
+  const namaTamuPHP = "<?php echo addslashes($nama_tamu); ?>";
+  const guestTagEl = document.getElementById('guestTag');
+  const pengantarNamaEl = document.getElementById('pengantarNama');
+  if (guestTagEl) guestTagEl.textContent = `✦ Kepada Yth. ${namaTamuPHP} ✦`;
+  if (pengantarNamaEl) pengantarNamaEl.textContent = namaTamuPHP;
+})();
+
 function toggleMobileMenu() {
   document.getElementById('mobileMenuDrawer').classList.toggle('open');
   document.getElementById('mobileMenuOverlay').classList.toggle('show');

@@ -755,3 +755,39 @@ body::before {
   .timeline-dot { flex-shrink: 0; order: 1; margin: 4px 16px 0 14px; }
   .timeline-content { text-align: left !important; order: 2; flex: 1; }
 }
+/* ─── OPENING SCREEN ─── */
+.opening-screen {
+  position: fixed;
+  inset: 0;
+  background: linear-gradient(rgba(0,0,0,0.5), rgba(0,0,0,0.6)),
+              url('https://i.pinimg.com/1200x/90/14/8e/90148e34ee0172258432b8c07dbc31d1.jpg');
+  background-size: cover;
+  background-position: center;
+  z-index: 9999;
+
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+  color: white;
+}
+
+.opening-content {
+  animation: fadeUp 1s ease;
+}
+
+.opening-title {
+  font-family: 'Cormorant Garamond', serif;
+  font-size: 60px;
+  margin: 10px 0;
+}
+
+.opening-title span {
+  color: var(--gold);
+}
+
+.opening-sub {
+  font-size: 14px;
+  margin-bottom: 30px;
+  letter-spacing: 2px;
+}
