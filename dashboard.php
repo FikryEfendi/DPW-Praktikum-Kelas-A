@@ -52,12 +52,15 @@ $sisa_hari_php = ($selisih->invert === 0) ? $selisih->days : 0;
   <div class="login-box">
     <div style="font-size:40px;margin-bottom:12px;">💍</div>
     <h2>Dashboard</h2>
-    <p>Masukkan kata sandi untuk akses dashboard pengelola undangan</p>
+    <p>Masukkan username dan kata sandi untuk akses dashboard</p>
+    
+    <input type="text" class="login-input" id="loginUser" placeholder="Username" style="margin-bottom:8px;">
     <input type="password" class="login-input" id="loginPass" placeholder="Password">
-    <p class="error-msg" id="loginErr">❌ Password salah. Coba lagi.</p>
+    
+    <p class="error-msg" id="loginErr">❌ Username atau Password salah. Coba lagi.</p>
     <button class="btn-gold" style="width:100%;margin-top:4px;" onclick="doLogin()">Masuk →</button>
     <p style="margin-top:14px;font-size:12px;color:var(--text-light);">
-      <a href="undangan.php" style="color:var(--text-light);">✕ Batal</a>
+      <a href="index.php" style="color:var(--text-light);">✕ Batal</a>
     </p>
   </div>
 </div>
@@ -76,7 +79,7 @@ $sisa_hari_php = ($selisih->invert === 0) ? $selisih->days : 0;
       <button onclick="showDashTab('edit')" id="btn-edit">Edit Undangan</button>
       <button onclick="showDashTab('tamu')" id="btn-tamu">Data Tamu</button>
       <button onclick="showDashTab('link')" id="btn-link">Generator Link</button>
-      <button class="btn-close" onclick="window.location.href='undangan.php'">✕ Tutup</button>
+      <button class="btn-close" onclick="window.location.href='index.php'">✕ Tutup</button>
     </div>
   </div>
 
@@ -91,7 +94,7 @@ $sisa_hari_php = ($selisih->invert === 0) ? $selisih->days : 0;
       <a href="#" id="side-edit" onclick="showDashTab('edit');return false;"><span class="menu-icon">✏️</span> Edit Undangan</a>
       <a href="#" id="side-tamu" onclick="showDashTab('tamu');return false;"><span class="menu-icon">👥</span> Data Tamu</a>
       <a href="#" id="side-link" onclick="showDashTab('link');return false;"><span class="menu-icon">🔗</span> Generator Link</a>
-      <a href="undangan.php" style="margin-top:12px;color:#c0392b;"><span class="menu-icon">🔙</span> Kembali</a>
+      <a href="index.php" style="margin-top:12px;color:#c0392b;"><span class="menu-icon">🔙</span> Kembali</a>
     </nav>
 
     <!-- MAIN CONTENT -->
@@ -240,7 +243,7 @@ $sisa_hari_php = ($selisih->invert === 0) ? $selisih->days : 0;
                   <th>Pesan</th>
                   <th>Kehadiran</th>
                   <th>Waktu</th>
-                </tr>
+                  <th>Aksi</th> </tr>
               </thead>
               <tbody id="tamuBody"></tbody>
             </table>
@@ -292,7 +295,7 @@ $sisa_hari_php = ($selisih->invert === 0) ? $selisih->days : 0;
           </div>
 
           <div class="generator-wrap" style="margin-top:20px;">
-            <p>💡 <strong>Format link:</strong> <code style="font-size:12px;">undangan.php?tamu=NamaTamu</code></p>
+            <p>💡 <strong>Format link:</strong> <code style="font-size:12px;">index.php?tamu=NamaTamu</code></p>
             <p style="margin-top:6px;">Nama tamu akan otomatis muncul di bagian cover dan pengantar undangan.</p>
           </div>
         </div>
@@ -301,7 +304,32 @@ $sisa_hari_php = ($selisih->invert === 0) ? $selisih->days : 0;
     </div><!-- /dash-content -->
   </div><!-- /dashboard-body -->
 </div><!-- /dashboard-wrap -->
-
+<div class="login-overlay" id="modalEditTamu">
+  <div class="login-box" style="padding: 30px;">
+    <h3 style="font-family:'Cinzel',serif; color:var(--brown); margin-bottom:16px;">✏️ Edit Data Tamu</h3>
+    
+    <input type="hidden" id="edit-index">
+    
+    <div style="text-align:left; margin-bottom:12px;">
+      <label style="font-size:10px; letter-spacing:1.5px; text-transform:uppercase; color:var(--gold-dark);">Nama Tamu</label>
+      <input type="text" id="edit-nama" class="login-input" style="margin-top:6px; margin-bottom:0;">
+    </div>
+    
+    <div style="text-align:left; margin-bottom:24px;">
+      <label style="font-size:10px; letter-spacing:1.5px; text-transform:uppercase; color:var(--gold-dark);">Status Kehadiran</label>
+      <select id="edit-status" class="login-input" style="margin-top:6px; margin-bottom:0; background:white;">
+        <option value="hadir">Hadir</option>
+        <option value="tidak">Tidak Hadir</option>
+        <option value="belum">Belum Konfirmasi</option>
+      </select>
+    </div>
+    
+    <div style="display:flex; gap:10px;">
+      <button class="btn-gold" style="flex:1;" onclick="simpanEdit()">Selesai</button>
+      <button class="btn-gold" style="flex:1; background:#e0e0e0; color:#333; box-shadow:none;" onclick="tutupEdit()">Batal</button>
+    </div>
+  </div>
+</div>
 <script>
 // Data tamu awal dari PHP diteruskan ke JavaScript
 const tamuDariPHP = <?php echo json_encode($daftar_tamu_awal); ?>;

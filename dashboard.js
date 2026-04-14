@@ -1,17 +1,19 @@
 // ─── AUTH ───
+const ADMIN_USER = 'admin';
 const ADMIN_PASS = 'admin123';
 
 function doLogin() {
+  const user = document.getElementById('loginUser').value;
   const pass = document.getElementById('loginPass').value;
   const err = document.getElementById('loginErr');
-  if (pass === ADMIN_PASS) {
+  
+  if (user === ADMIN_USER && pass === ADMIN_PASS) {
     document.getElementById('loginOverlay').classList.remove('show');
+    document.getElementById('loginUser').value = '';
     document.getElementById('loginPass').value = '';
     err.style.display = 'none';
     document.getElementById('dashboardWrap').classList.add('active');
     updateStats();
-    renderTamuTable();
-    renderChecklist();
     updateDashCountdown();
   } else {
     err.style.display = 'block';
@@ -21,9 +23,18 @@ function doLogin() {
 
 document.addEventListener('DOMContentLoaded', () => {
   document.getElementById('loginOverlay').classList.add('show');
+  
+  // Tombol enter pindah ke password & login
+  document.getElementById('loginUser').addEventListener('keydown', (e) => {
+    if (e.key === 'Enter') document.getElementById('loginPass').focus();
+  });
   document.getElementById('loginPass').addEventListener('keydown', (e) => {
     if (e.key === 'Enter') doLogin();
   });
+
+  // Tarik data dari database saat halaman pertama kali dimuat
+  fetchUcapan();
+  renderChecklist();
 });
 
 // ─── COUNTDOWN (for dashboard) ───
@@ -37,50 +48,30 @@ function updateDashCountdown() {
 }
 setInterval(updateDashCountdown, 60000);
 
-// ─── DATA (sync via localStorage) ───
-function loadUcapan() {
+// ─── DATA (Sync via DATABASE API) ───
+let ucapanData = []; // Array utama untuk semua data
+
+async function fetchUcapan() {
   try {
-    const raw = localStorage.getItem('ucapanData');
-    if (raw) return JSON.parse(raw);
-  } catch(e) {}
-  return [
-    { nama: 'Ahmad Rizki', pesan: 'Selamat menempuh hidup baru! Semoga menjadi keluarga yang sakinah, mawaddah, warahmah. Aamiin 🤍', status: 'hadir', waktu: '01 Jan 2027, 10:23' },
-    { nama: 'Siti Nurhaliza', pesan: "Barakallahu lakuma wa baraka 'alaikuma. Selamat ya kak! 💛", status: 'hadir', waktu: '05 Jan 2027, 14:11' },
-    { nama: 'Deni Saputra', pesan: 'Semoga langgeng hingga maut memisahkan. Doain dari jauh. 🙏', status: 'tidak', waktu: '10 Jan 2027, 09:05' },
-  ];
+    const response = await fetch('api_tamu.php?action=get');
+    ucapanData = await response.json();
+    
+    // Tiap kali narik data, render ulang kedua tabel dan stats
+    renderTamuTable();
+    renderLinkTable();
+    updateStats();
+  } catch (error) {
+    console.error('Gagal mengambil data:', error);
+  }
 }
-
-function saveUcapan(data) {
-  try { localStorage.setItem('ucapanData', JSON.stringify(data)); } catch(e) {}
-}
-
-// ─── DAFTAR TAMU (data admin kelola) ───
-function loadTamuList() {
-  try {
-    const raw = localStorage.getItem('tamuList');
-    if (raw) return JSON.parse(raw);
-  } catch(e) {}
-  return [
-    { nama: 'Farhan' },
-    { nama: 'Budi Santoso' },
-    { nama: 'Sari Dewi' },
-  ];
-}
-
-function saveTamuList(data) {
-  try { localStorage.setItem('tamuList', JSON.stringify(data)); } catch(e) {}
-}
-
-let ucapanData = loadUcapan();
-let tamuList = loadTamuList();
 
 // ─── STATS ───
 function updateStats() {
-  ucapanData = loadUcapan();
   const total = ucapanData.length;
   const hadir = ucapanData.filter(u => u.status === 'hadir').length;
   const tidak = ucapanData.filter(u => u.status === 'tidak').length;
   const pending = total - hadir - tidak;
+  
   document.getElementById('stat-total').textContent = total;
   document.getElementById('stat-hadir').textContent = hadir;
   document.getElementById('stat-tidak').textContent = tidak;
@@ -88,7 +79,6 @@ function updateStats() {
 }
 
 // ─── TABS ───
-// Tab yang tersedia: overview, edit, tamu, link
 const ALL_TABS = ['overview', 'edit', 'tamu', 'link'];
 
 function showDashTab(tab) {
@@ -100,28 +90,126 @@ function showDashTab(tab) {
     if (btn) btn.className = t === tab ? 'active' : '';
     if (sideLink) sideLink.className = t === tab ? 'active' : '';
   });
-  if (tab === 'tamu') renderTamuTable();
-  if (tab === 'link') renderLinkTable();
   closeSidebar();
 }
 
-// ─── TAMU TABLE (ucapan yang masuk) ───
+// ─── TAB: TAMU TABLE ───
 function renderTamuTable() {
-  ucapanData = loadUcapan();
   const tbody = document.getElementById('tamuBody');
   if (!tbody) return;
   tbody.innerHTML = '';
+  
   ucapanData.forEach((t, i) => {
     const badgeClass = t.status === 'hadir' ? 'badge-hadir' : t.status === 'tidak' ? 'badge-tidak' : 'badge-belum';
     const badgeText = t.status === 'hadir' ? '✓ Hadir' : t.status === 'tidak' ? '✗ Tidak Hadir' : '— Belum';
+    
+    // Hindari error jika t.pesan null dari DB
+    const pesanAman = t.pesan ? t.pesan : ''; 
+
     tbody.innerHTML += `<tr>
       <td style="color:var(--gold-dark);font-weight:600;">${i+1}</td>
       <td style="font-weight:600;">${t.nama}</td>
-      <td style="max-width:260px;font-style:italic;color:var(--text-light);">${t.pesan.substring(0,80)}${t.pesan.length>80?'…':''}</td>
+      <td style="max-width:260px;font-style:italic;color:var(--text-light);">${pesanAman.substring(0,80)}${pesanAman.length>80?'…':''}</td>
       <td><span class="badge ${badgeClass}">${badgeText}</span></td>
       <td style="color:var(--text-light);font-size:12px;">${t.waktu}</td>
+      <td>
+        <button class="btn-sm btn-sm-gold" onclick="bukaEdit(${i})">✏️ Edit</button>
+        <button class="btn-sm btn-sm-red" style="margin-top:4px;" onclick="hapusTamu(${t.id})">🗑️ Hapus</button>
+      </td>
     </tr>`;
   });
+}
+
+// ─── TAB: LINK GENERATOR ───
+function renderLinkTable() {
+  const tbody = document.getElementById('linkTableBody');
+  if (!tbody) return;
+  
+  const baseUrl = "http://localhost/DPW-praktikum-kelas-A/index.php";
+
+  tbody.innerHTML = ucapanData.map((t) => {
+    const link = `${baseUrl}?tamu=${encodeURIComponent(t.nama.trim())}`;
+    return `<tr>
+      <td style="font-weight:600;">${t.nama}</td>
+      <td style="font-family:monospace;font-size:12px;color:var(--text-light);word-break:break-all;">
+        <a href="${link}" target="_blank" style="color:inherit; text-decoration:none;">${link}</a>
+      </td>
+      <td>
+        <button class="btn-sm btn-sm-gold" onclick="copyLink('${encodeURIComponent(link)}')">📋 Salin</button>
+        <button class="btn-sm btn-sm-red" style="margin-top:4px;" onclick="hapusTamu(${t.id})">✕</button>
+      </td>
+    </tr>`;
+  }).join('');
+}
+
+// ─── CRUD: TAMBAH DATA ───
+async function tambahTamu() {
+  const input = document.getElementById('namaTamuBaru');
+  if (!input) return;
+  const nama = input.value.trim();
+  
+  if (!nama) {
+    alert("Masukkan nama tamu!");
+    return;
+  }
+
+  await fetch('api_tamu.php?action=add', {
+    method: 'POST',
+    headers: { 'Content-Type': 'application/json' },
+    body: JSON.stringify({ nama: nama })
+  });
+
+  input.value = ''; 
+  fetchUcapan(); 
+}
+
+// ─── CRUD: EDIT DATA ───
+function bukaEdit(index) {
+  const tamu = ucapanData[index];
+  
+  // Mengisi data modal dari array yang terpilih
+  document.getElementById('edit-index').value = tamu.id; 
+  document.getElementById('edit-nama').value = tamu.nama;
+  document.getElementById('edit-status').value = tamu.status;
+  
+  document.getElementById('modalEditTamu').classList.add('show');
+}
+
+function tutupEdit() {
+  document.getElementById('modalEditTamu').classList.remove('show');
+}
+
+async function simpanEdit() {
+  const idTamu = document.getElementById('edit-index').value;
+  const namaBaru = document.getElementById('edit-nama').value;
+  const statusBaru = document.getElementById('edit-status').value;
+
+  if (namaBaru.trim() === '') {
+    alert("Nama tidak boleh kosong!");
+    return;
+  }
+
+  await fetch('api_tamu.php?action=update', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({ id: idTamu, nama: namaBaru, status: statusBaru })
+  });
+
+  tutupEdit();
+  fetchUcapan(); 
+}
+
+// ─── CRUD: HAPUS DATA ───
+async function hapusTamu(idTamu) {
+  if (!confirm('Yakin ingin menghapus tamu ini dari database?')) return;
+
+  await fetch('api_tamu.php?action=delete', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({ id: idTamu })
+  });
+
+  fetchUcapan(); 
 }
 
 // ─── CHECKLIST ───
@@ -146,43 +234,7 @@ function renderChecklist() {
     </div>`).join('');
 }
 
-// ─── LINK GENERATOR ───
-function renderLinkTable() {
-  tamuList = loadTamuList();
-  const tbody = document.getElementById('linkTableBody');
-  if (!tbody) return;
-  tbody.innerHTML = tamuList.map((t, i) => {
-    const base = window.location.href.replace('dashboard.html', 'undangan.html');
-    const link = `${base}?tamu=${encodeURIComponent(t.nama)}`;
-    return `<tr>
-      <td style="font-weight:600;">${t.nama}</td>
-      <td style="font-family:monospace;font-size:12px;color:var(--text-light);word-break:break-all;">${link}</td>
-      <td>
-        <button class="btn-sm btn-sm-gold" onclick="copyLink('${encodeURIComponent(link)}')">📋 Salin</button>
-        <button class="btn-sm btn-sm-red" style="margin-top:4px;" onclick="hapusTamu(${i})">✕</button>
-      </td>
-    </tr>`;
-  }).join('');
-}
-
-function tambahTamu() {
-  const input = document.getElementById('namaTamuBaru');
-  if (!input) return;
-  const nama = input.value.trim();
-  if (!nama) return;
-  tamuList.push({ nama });
-  saveTamuList(tamuList);
-  input.value = '';
-  renderLinkTable();
-}
-
-function hapusTamu(i) {
-  if (!confirm('Hapus tamu ini?')) return;
-  tamuList.splice(i, 1);
-  saveTamuList(tamuList);
-  renderLinkTable();
-}
-
+// ─── UTILITIES ───
 function copyLink(encodedLink) {
   const link = decodeURIComponent(encodedLink);
   navigator.clipboard.writeText(link).then(() => {
@@ -192,7 +244,6 @@ function copyLink(encodedLink) {
   });
 }
 
-// ─── SAVE EDIT ───
 function saveEdits() {
   const msg = document.getElementById('saveMsg');
   if (msg) {
@@ -201,29 +252,31 @@ function saveEdits() {
   }
 }
 
-// ─── SIDEBAR MOBILE ───
-function toggleSidebar() {
-  const sidebar = document.getElementById('dashSidebar');
-  const overlay = document.getElementById('sidebarOverlay');
-  sidebar.classList.toggle('open');
-  overlay.classList.toggle('show');
-}
-function closeSidebar() {
-  const sidebar = document.getElementById('dashSidebar');
-  const overlay = document.getElementById('sidebarOverlay');
-  if (sidebar) sidebar.classList.remove('open');
-  if (overlay) overlay.classList.remove('show');
-}
-
 // ─── EXPORT CSV ───
 function exportCSV() {
-  ucapanData = loadUcapan();
+  // Karena datanya pakai DB, kita looping dari ucapanData yang sudah di-fetch
   const rows = [['Nama','Pesan','Kehadiran','Waktu']];
-  ucapanData.forEach(u => rows.push([u.nama, u.pesan, u.status, u.waktu]));
+  ucapanData.forEach(u => {
+    const pesan = u.pesan ? u.pesan : '';
+    rows.push([u.nama, pesan, u.status, u.waktu]);
+  });
+  
   const csv = rows.map(r => r.map(v => `"${v}"`).join(',')).join('\n');
   const blob = new Blob([csv], { type: 'text/csv;charset=utf-8;' });
   const a = document.createElement('a');
   a.href = URL.createObjectURL(blob);
   a.download = 'data-tamu-undangan.csv';
   a.click();
+}
+
+// ─── SIDEBAR MOBILE ───
+function toggleSidebar() {
+  document.getElementById('dashSidebar').classList.toggle('open');
+  document.getElementById('sidebarOverlay').classList.toggle('show');
+}
+function closeSidebar() {
+  const sidebar = document.getElementById('dashSidebar');
+  const overlay = document.getElementById('sidebarOverlay');
+  if (sidebar) sidebar.classList.remove('open');
+  if (overlay) overlay.classList.remove('show');
 }
